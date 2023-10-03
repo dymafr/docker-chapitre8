@@ -1,6 +1,7 @@
 const express = require('express');
 const { MongoClient } = require('mongodb');
 const app = express();
+let count;
 
 const client = new MongoClient(
   `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PWD}@db`
@@ -29,8 +30,7 @@ app.get('/', (req, res) => {
       { returnNewDocument: true, upsert: true }
     )
     .then((doc) => {
-      const count = doc.value;
-      res.status(200).json(count ? count.count : 0);
+      res.status(200).json(doc ? doc.count : 0);
     });
 });
 
