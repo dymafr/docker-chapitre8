@@ -1,5 +1,5 @@
-const express = require('express');
-const { MongoClient } = require('mongodb');
+const express = require("express");
+const { MongoClient } = require("mongodb");
 const app = express();
 let count;
 
@@ -9,24 +9,24 @@ const client = new MongoClient(
 async function run() {
   try {
     await client.connect();
-    await client.db('admin').command({ ping: 1 });
-    console.log('CONNEXION DB OK !');
-    count = client.db('test').collection('count');
+    await client.db("admin").command({ ping: 1 });
+    console.log("CONNEXION DB OK !");
+    count = client.db("test").collection("count");
   } catch (err) {
     console.log(err.stack);
   }
 }
 run().catch(console.dir);
 
-app.get('/err', (req, res) => {
+app.get("/err", (req, res) => {
   process.exit(0);
 });
 
-app.get('/', (req, res) => {
+app.get("/", (req, res) => {
   count
     .findOneAndUpdate(
       {},
-      { $inc: { count: 1 } },
+      { $inc: { count: 2 } },
       { returnNewDocument: true, upsert: true }
     )
     .then((doc) => {
