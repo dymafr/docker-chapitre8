@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
   count
     .findOneAndUpdate(
       {},
-      { $inc: { count: 2 } },
+      { $inc: { count: 1 } },
       { returnNewDocument: true, upsert: true }
     )
     .then((doc) => {
